@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  database:
+    deploy:
+      resources:
+        limits:
+          memory: 5G
+        reservations:
+          memory: 1G
+    build:
+      context: .
+      shm_size: '3gb' #<-- this will set the size when BUILDING
+    shm_size: '3gb' #<-- when RUNNING
+    image: store/oracle/database-enterprise:12.2.0.1-slim
+    container_name: oracle12
+    volumes:
+      - /home/oracle/oradata:/opt/oracle/oradata
+    ports:
+      - "1521:1521"
+      - "8080:8080"
+      - "5500:5500"

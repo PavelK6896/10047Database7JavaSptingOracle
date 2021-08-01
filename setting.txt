@@ -1,0 +1,17 @@
+
+
+
+SYS as SYSDBA
+
+Username: SYS
+Role: SYSDBA
+Password: Oradoc_db1
+Host: localhost
+SID: ORCLCDB
+
+
+
+wsl --shutdown
+.wslconfig
+memory=10GB
+
