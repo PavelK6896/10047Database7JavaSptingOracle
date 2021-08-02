@@ -1,7 +1,7 @@
 
 
-
 SYS as SYSDBA
+
 
 Username: SYS
 Role: SYSDBA
@@ -10,8 +10,9 @@ Host: localhost
 SID: ORCLCDB
 
 
-
 wsl --shutdown
 .wslconfig
 memory=10GB
 
+
+SELECT * FROM v$version;
