@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import java.math.BigInteger;
+
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Data

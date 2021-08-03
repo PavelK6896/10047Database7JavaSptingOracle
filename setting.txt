@@ -16,3 +16,25 @@ memory=10GB
 
 
 SELECT * FROM v$version;
+
+
+--создать пользователя
+create user c##q1 identified by q1;
+grant connect, resource to c##q1;
+grant sysdba to c##q1 container=all;
+grant unlimited tablespace to c##q1;
+
+
+--посмотреть пользователей
+select * from DBA_USERS;
+select * from ALL_USERS;
+select user from dual;
+select * from v$pwfile_users;
+select d.username,  u.account_status from DBA_USERS_WITH_DEFPWD d, DBA_USERS u  where d.username = u.username  order by 2,1;
+
+
+
+
+
+
+
