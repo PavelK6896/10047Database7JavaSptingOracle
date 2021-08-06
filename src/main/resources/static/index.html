@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--        <script src="./sockjs.min.js"></script>-->
+    <!--        <script src="./stomp.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.2/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <title>Document</title>
+</head>
+<script>
+    let l1 = 1;
+    let stompClient;
+    const creatS = () => {
+        fetch('http://localhost:8081/c')
+            .then(f => {
+                console.log("f " + f)
+                return f.text();
+            }).then(g => {
+            console.log("g " + g)
+        })
+    }
+    const deleteS = () => {
+        fetch('http://localhost:8081/d')
+            .then(f => {
+                console.log("f " + f)
+                return f.text();
+            }).then(g => {
+            console.log("g " + g)
+        })
+    }
+
+    const connectS = () => {
+        stompClient = Stomp.over(new SockJS('http://localhost:8081/info', null, {}));
+        stompClient.connect(
+            {'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9...'}, frame => {
+            });
+    }
+
+    const disconnectS = () => {
+        stompClient.disconnect(() => {
+        }, headers = {})
+    }
+
+    let subscribe1;
+    const subscribeS = () => {
+        subscribe1 = subscribe1 === undefined ? stompClient.subscribe('/topic/messages', greeting => {
+            let p = document.getElementById('p1');
+            p.textContent = greeting.body.toString()
+        }) : subscribe1
+        console.log(subscribe1)
+    }
+
+    const unsubscribeS = () => {
+        subscribe1 = stompClient.unsubscribe(subscribe1.id, headers = {});
+        console.log(subscribe1)
+    }
+
+    const saveS = () => {
+        fetch('http://localhost:8081/s')
+            .then(f => {
+                console.log("f " + f)
+                return f.text();
+            }).then(g => {
+            console.log("g " + g)
+        })
+    }
+
+    const allS = () => {
+        fetch('http://localhost:8081/a')
+            .then(f => {
+                console.log("f " + f)
+                return f.json();
+            }).then(g => {
+            let p = document.getElementById('d1');
+            p.innerHTML = '';
+            g.reverse().forEach((item, i, arr) => {
+                const cc = document.createElement('div');
+                cc.setAttribute("id", "Div" + i);
+                cc.textContent = item.id + " = " + item.n1
+                p.appendChild(cc);
+            });
+        })
+    }
+
+</script>
+<body>
+
+<div>
+    <div id="p1">Text</div>
+
+    <button onclick="creatS()">create</button>
+    <button onclick="deleteS()">delete</button>
+    <button onclick="connectS()">connect</button>
+    <button onclick="disconnectS()">disconnect</button>
+    <button onclick="subscribeS()">subscribe</button>
+    <button onclick="unsubscribeS()">unsubscribe</button>
+    <button onclick="saveS()">save</button>
+    <button onclick="allS()">all</button>
+</div>
+
+<div id="d1">
+
+</div>
+
+</body>
+</html>

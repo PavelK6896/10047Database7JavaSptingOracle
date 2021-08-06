@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,18 +26,18 @@ public class MainController {
     @Value("classpath:static/favicon.ico")
     Resource resource;
 
-    @GetMapping("/")
-    public String main() {
-        return bookRepo.findAll().toString();
+    @GetMapping("/a")
+    public List<Book> main() {
+        return bookRepo.findAll();
     }
 
     @GetMapping("/s")
     public String main2() {
-        bookRepo.save(Book.builder().build());
+        bookRepo.save(Book.builder().n1(ThreadLocalRandom.current().nextLong()).build());
         return "ok";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/book/{id}")
     public String main3(@PathVariable("id") Long id) {
         return bookRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).toString();
     }

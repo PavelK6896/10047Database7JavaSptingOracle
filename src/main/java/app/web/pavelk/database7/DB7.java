@@ -8,8 +8,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class DB7 {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DB7.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DB7.class, args);
+    }
 
 }
