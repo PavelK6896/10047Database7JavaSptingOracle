@@ -1,19 +1,43 @@
-
 server:
   port: 8081
 
 spring:
   datasource:
-      url: jdbc:oracle:thin:@localhost:1521:ORCLCDB
-      username: c##q1
-      password: q1
+    url: jdbc:oracle:thin:@localhost:1521:ORCLCDB
+    username: c##q1
+    password: q1
 
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: validate
     properties:
+      javax:
+        persistence:
+          sharedCache:
+            #required - enable selective caching mode - only entities with @Cacheable annotation will use L2 cache.
+            mode: ENABLE_SELECTIVE
       hibernate:
+        javax:
+          cache:
+            missing_cache_strategy: create
+        #optional - generate statistics to check if L2/query cache is actually being used.
+        generate_statistics: true
+        cache:
+          #required - turn on L2 cache.
+          use_second_level_cache: true
+          #optional - turn on query cache.
+          use_query_cache: true
+          region:
+            factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
+            #required - classpath to cache region factory.
+        #            factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
         format_sql: true
         dialect: org.hibernate.dialect.Oracle12cDialect
 
+#
+#logging:
+#  level:
+#    org:
+#      hibernate:
+#        type: trace

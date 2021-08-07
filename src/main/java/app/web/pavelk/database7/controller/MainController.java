@@ -2,7 +2,7 @@ package app.web.pavelk.database7.controller;
 
 
 import app.web.pavelk.database7.repo.BookRepo;
-import app.web.pavelk.database7.shema.Book;
+import app.web.pavelk.database7.schema.Book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.cache.CacheManager;
+import javax.cache.Caching;
+import javax.cache.spi.CachingProvider;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -46,6 +49,16 @@ public class MainController {
     @ResponseBody
     public byte[] returnNoFavicon() throws IOException {
         return resource.getInputStream().readAllBytes();
+    }
+
+    @GetMapping("/cache")
+    public String cache() {
+        CachingProvider cachingProvider = Caching.getCachingProvider();
+        CacheManager cacheManager = cachingProvider.getCacheManager();
+        System.out.println("--------------------");
+        System.out.println(cachingProvider.getDefaultProperties());
+        System.out.println(cacheManager.isClosed());
+        return "ok";
     }
 
 }

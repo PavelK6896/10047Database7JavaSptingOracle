@@ -1,6 +1,7 @@
-package app.web.pavelk.database7.shema;
+package app.web.pavelk.database7.schema;
 
 import lombok.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
@@ -13,6 +14,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"id"})
 @Table(schema = "C##Q1", name = "book")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Book {
 
     @Id
